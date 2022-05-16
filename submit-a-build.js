@@ -4,7 +4,7 @@ var skillArray = "[\"recKw9BQWtPeWItjV\",\"recKw9BQWtPeWItjV\",\"recKw9BQWtPeWIt
 function shipSearch () {
   var search = $('#ship-search').val().toLowerCase()
   $('.ship-select').each(function(){
-    var name = $(this).find('.select-data').attr('name')
+    var name = $(this).find('.select-data').attr('name').normalize('NFD').replace(/[\u0300-\u036f]/g, "")
     if (name.toLowerCase().indexOf(search) >= 0 && search !== '') {
       $(this).show()
     } else {
