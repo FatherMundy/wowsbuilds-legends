@@ -4,7 +4,11 @@ function getRank (x,y){
 };
 
 function c(num) {
-  return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  if($('#series-status').html()=="In Progress") {
+    return num
+  } else {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  }
 };
 
 function verify (x){
