@@ -6,7 +6,8 @@ function getRank (x,y){
 function c(num) {
   if($('#series-status').html()=="In Progress") {
     let regex = /\d/g;
-    let result = num.replace(regex, "*");
+    let string = num.toString()
+    let result = string.replace(regex, "*");
     return result
   } else {
     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
