@@ -82,7 +82,7 @@ function scorePrint(){
 
 function printShip(){
   // PRINT SCORES
-  //scorePrint()
+  scorePrint()
   // SHIP PRINTING
   $.each(ship, function(key,value){
       if (key.indexOf("_dev") !== -1) {
