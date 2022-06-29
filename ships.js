@@ -53,7 +53,8 @@ function flagSelect(x){
 
 
 var ship = JSON.parse($('#ship-data').html())
-console.log(ship)
+//console.log(ship)
+var score = JSON.parse($('#score-data').html())
 var peer = JSON.parse($('#peer-data').html()).sort(function(a,b){
     return b.hp - a.hp
   })
