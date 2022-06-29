@@ -59,134 +59,157 @@ var peer = JSON.parse($('#peer-data').html()).sort(function(a,b){
   })
 $('#peer-data').html(JSON.stringify(peer))
 
-function printShip(){
-  // SHIP PRINTING
-$.each(ship, function(key,value){
-    if (key.indexOf("_dev") !== -1) {
-      var x = $("#"+key)
-      var a = x.attr('data-type')
-      devAmount(value,a)
-      x.attr('src',img)
-    } else if (value !== null) {
-      var x = $("#"+key).find('[info="value"]')
-      var fmt = x.attr('data-fmt')
-      if (fmt == "c") {
-        x.html(c(value))
-      } else if (fmt == "km") {
-        x.html(o(value)+" km")
-      } else if (fmt == "t") {
-        x.html(t(value))
-      } else if (fmt == "po") {
-        x.html(p(value))
-      } else if (fmt == "kt") {
-        x.html(o(value)+" kt")
-      } else if (fmt == "pt") {
-        x.html(pt(value))
-      } else if (fmt == "mm") {
-        x.html(r(value)+" mm")
-      } else if (fmt == "dps") {
-        x.html(t(value)+" º/s")
-      } else if (fmt == "so") {
-        x.html(o(value)+" s")
-      } else if (fmt == "st") {
-        x.html(t(value)+" s")
-      } else if (fmt == "p") {
-        x.html(p(value))
-      } else if (fmt == "m") {
-        x.html(r(value)+" m")
-      } else {
-        x.html(value)
-      }
-    }
-
-    //hiding
-    if (key == "class" && value == "Aircraft Carrier") {
-      $('#aircraft').show()
-      $('#mb').hide()
-    }
-    if (key == "torpedo_layout" && value == null) {
-      $('#torpedo').hide()
-    }
-    if (key == "he_damage" && value == null) {
-      $('#he-shell').hide()
-    }
-    if (key == "ap_damage" && value == null) {
-      $('#ap-shell').hide()
-    }
-    if (key == "atba_range" && value == null) {
-      $('#sb').hide()
-    }
-    if (key == "atba_2_name" && value == null) {
-      $('#atba_2').hide()
-    }
-    if (key == "aa_1_name" && value == null) {
-      $('#aa').hide()
-    }
-    if (key == "aa_2_name" && value == null) {
-      $('#aa2').hide()
-    }
-    if (key == "aa_3_name" && value == null) {
-      $('#aa3').hide()
-    }
-    if (key == "aa_4_name" && value == null) {
-      $('#aa4').hide()
-    }
-
-    //PRINT CONSUMES
-    if (key.indexOf('consum')!==-1){
-      var slot = key
+//Add scores
+function scorePrint(){
+  if (score.count>9.9){
+    $('#progress_section').hide()
+    $('#rating_bars').show()
+    $.each(score,function(index,value){
+      console.log(index)
       console.log(value)
-      if (value.length==0) {$('#'+slot).hide()}
-      $.each(value, function(index,key,value){
-        var type = key.name
-        $('#'+slot).append('<div class="card-outline no-hover" data-option="'+type+'"><div class="flex-h-c"><img src="'+key.icon+'" loading="lazy" alt="" class="icon _24r"><div class="selected-name minor">'+type+'</div></div></div>')
-        if (key.effects.smoke_disp!==undefined) {
-          $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>Dispersion Time</div><div class="bold-2">'+o(key.effects.smoke_disp)+' s</div></div>')
+      var drift = (value/5*100+"%")
+      $('#'+index+'_rating').html(t(value))
+      $('#'+index+'_slider').css('left',drift)
+    })
+  } else {
+    $('#progress_section').show()
+    $('#rating_bars').hide()
+    $('#rating_progress').html(score.count+"/10")
+    var drift = (100-((score.count/10)*100)+"%")
+    $('.progress-bar-level').css('right',drift)
+  }
+}
+
+function printShip(){
+  // PRRINT SCORES
+  scorePrint()
+  // SHIP PRINTING
+  $.each(ship, function(key,value){
+      if (key.indexOf("_dev") !== -1) {
+        var x = $("#"+key)
+        var a = x.attr('data-type')
+        devAmount(value,a)
+        x.attr('src',img)
+      } else if (value !== null) {
+        var x = $("#"+key).find('[info="value"]')
+        var fmt = x.attr('data-fmt')
+        if (fmt == "c") {
+          x.html(c(value))
+        } else if (fmt == "km") {
+          x.html(o(value)+" km")
+        } else if (fmt == "t") {
+          x.html(t(value))
+        } else if (fmt == "po") {
+          x.html(p(value))
+        } else if (fmt == "kt") {
+          x.html(o(value)+" kt")
+        } else if (fmt == "pt") {
+          x.html(pt(value))
+        } else if (fmt == "mm") {
+          x.html(r(value)+" mm")
+        } else if (fmt == "dps") {
+          x.html(t(value)+" º/s")
+        } else if (fmt == "so") {
+          x.html(o(value)+" s")
+        } else if (fmt == "st") {
+          x.html(t(value)+" s")
+        } else if (fmt == "p") {
+          x.html(p(value))
+        } else if (fmt == "m") {
+          x.html(r(value)+" m")
+        } else {
+          x.html(value)
         }
-        if (key.effects.speed_boost!==undefined) {
-          $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>Speed Boost</div><div class="bold-2 green">'+p(key.effects.speed_boost)+'</div></div>')
-          $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>Max Speed</div><div class="bold-2 green">'+o((1+key.effects.speed_boost)*ship.max_speed)+' kt</div></div>')
-        }
-        if (key.effects.heal_amount!==undefined) {
-          $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>Health per second</div><div class="bold-2 green">+'+key.effects.heal_amount*100+' %</div></div>')
-          $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>Max Heal</div><div class="bold-2 green">+'+c(key.effects.heal_amount*ship.hp*key.duration)+'</div></div>')
-        }
-        if (key.effects.torp_detect!==undefined) {
-          $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>Torp Detection</div><div class="bold-2">'+o(key.effects.torp_detect)+' km</div></div>')
-        }
-        if (key.effects.ship_detect!==undefined) {
-          $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>Ship Detection</div><div class="bold-2">'+o(key.effects.ship_detect)+' km</div></div>')
-        }
-        if (key.effects.aa_damage_multi!==undefined) {
-          $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>AA DPS Increase</div><div class="bold-2 green">+200%</div></div>')
-        }
-        if (key.effects.radar_range!==undefined) {
-          $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>Radar Range</div><div class="bold-2">'+o(key.effects.radar_range)+' km</div></div>')
-        }
-        if (key.effects.sigma!==undefined) {
-          $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>Shell Grouping</div><div class="bold-2 green">+10%</div></div>')
-        }
-        if (key.effects.atbas_sigma!==undefined) {
-          $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>Secondary Shell Grouping</div><div class="bold-2 green">+100%</div></div>')
-        }
-        if (key.effects.atbas_disp!==undefined) {
-          $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>Secondary Shell Dispersion</div><div class="bold-2 green">-50%</div></div>')
-        }
-        if (key.effects.torp_reload!==undefined) {
-          $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>Torpedo Reload</div><div class="bold-2">'+r(key.effects.torp_reload)+' s</div></div>')
-        }
-        if (key.effects.reload!==undefined) {
-          $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>Reload Time Boost</div><div class="bold-2 green">+50%</div></div>')
-          $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>Reload Time</div><div class="bold-2">'+o(ship.reload*.5)+' s</div></div>')
-        }
-        //basic info
-        if (key.charges > 10) {var charges = "∞"} else {var charges = key.charges}
-        $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>Duration</div><div class="bold-2">'+o(key.duration)+' s</div></div>')
-        $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>Cooldown</div><div class="bold-2">'+o(key.cooldown)+' s</div></div>')
-        $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>Charges</div><div class="bold-2">'+charges+'</div></div>')
-      })
-    }
-})
+      }
+
+      //hiding
+      if (key == "class" && value == "Aircraft Carrier") {
+        $('#aircraft').show()
+        $('#mb').hide()
+      }
+      if (key == "torpedo_layout" && value == null) {
+        $('#torpedo').hide()
+      }
+      if (key == "he_damage" && value == null) {
+        $('#he-shell').hide()
+      }
+      if (key == "ap_damage" && value == null) {
+        $('#ap-shell').hide()
+      }
+      if (key == "atba_range" && value == null) {
+        $('#sb').hide()
+      }
+      if (key == "atba_2_name" && value == null) {
+        $('#atba_2').hide()
+      }
+      if (key == "aa_1_name" && value == null) {
+        $('#aa').hide()
+      }
+      if (key == "aa_2_name" && value == null) {
+        $('#aa2').hide()
+      }
+      if (key == "aa_3_name" && value == null) {
+        $('#aa3').hide()
+      }
+      if (key == "aa_4_name" && value == null) {
+        $('#aa4').hide()
+      }
+
+      //PRINT CONSUMES
+      if (key.indexOf('consum')!==-1){
+        var slot = key
+        console.log(value)
+        if (value.length==0) {$('#'+slot).hide()}
+        $.each(value, function(index,key,value){
+          var type = key.name
+          $('#'+slot).append('<div class="card-outline no-hover" data-option="'+type+'"><div class="flex-h-c"><img src="'+key.icon+'" loading="lazy" alt="" class="icon _24r"><div class="selected-name minor">'+type+'</div></div></div>')
+          if (key.effects.smoke_disp!==undefined) {
+            $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>Dispersion Time</div><div class="bold-2">'+o(key.effects.smoke_disp)+' s</div></div>')
+          }
+          if (key.effects.speed_boost!==undefined) {
+            $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>Speed Boost</div><div class="bold-2 green">'+p(key.effects.speed_boost)+'</div></div>')
+            $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>Max Speed</div><div class="bold-2 green">'+o((1+key.effects.speed_boost)*ship.max_speed)+' kt</div></div>')
+          }
+          if (key.effects.heal_amount!==undefined) {
+            $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>Health per second</div><div class="bold-2 green">+'+key.effects.heal_amount*100+' %</div></div>')
+            $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>Max Heal</div><div class="bold-2 green">+'+c(key.effects.heal_amount*ship.hp*key.duration)+'</div></div>')
+          }
+          if (key.effects.torp_detect!==undefined) {
+            $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>Torp Detection</div><div class="bold-2">'+o(key.effects.torp_detect)+' km</div></div>')
+          }
+          if (key.effects.ship_detect!==undefined) {
+            $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>Ship Detection</div><div class="bold-2">'+o(key.effects.ship_detect)+' km</div></div>')
+          }
+          if (key.effects.aa_damage_multi!==undefined) {
+            $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>AA DPS Increase</div><div class="bold-2 green">+200%</div></div>')
+          }
+          if (key.effects.radar_range!==undefined) {
+            $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>Radar Range</div><div class="bold-2">'+o(key.effects.radar_range)+' km</div></div>')
+          }
+          if (key.effects.sigma!==undefined) {
+            $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>Shell Grouping</div><div class="bold-2 green">+10%</div></div>')
+          }
+          if (key.effects.atbas_sigma!==undefined) {
+            $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>Secondary Shell Grouping</div><div class="bold-2 green">+100%</div></div>')
+          }
+          if (key.effects.atbas_disp!==undefined) {
+            $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>Secondary Shell Dispersion</div><div class="bold-2 green">-50%</div></div>')
+          }
+          if (key.effects.torp_reload!==undefined) {
+            $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>Torpedo Reload</div><div class="bold-2">'+r(key.effects.torp_reload)+' s</div></div>')
+          }
+          if (key.effects.reload!==undefined) {
+            $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>Reload Time Boost</div><div class="bold-2 green">+50%</div></div>')
+            $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>Reload Time</div><div class="bold-2">'+o(ship.reload*.5)+' s</div></div>')
+          }
+          //basic info
+          if (key.charges > 10) {var charges = "∞"} else {var charges = key.charges}
+          $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>Duration</div><div class="bold-2">'+o(key.duration)+' s</div></div>')
+          $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>Cooldown</div><div class="bold-2">'+o(key.cooldown)+' s</div></div>')
+          $('[data-option="'+type+'"]').append('<div class="row2 minor"><div>Charges</div><div class="bold-2">'+charges+'</div></div>')
+        })
+      }
+  })
 
 //CREATE PEER TABLE
 $.each(peer,function(index,key,value){
