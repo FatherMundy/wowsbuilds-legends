@@ -64,20 +64,23 @@ $('#peer-data').html(JSON.stringify(peer))
 function scorePrint(){
   if (score.count>9.9){
     $('#progress_section').hide()
-    $('#rating_bars').show()
+    $('#rating_count').show()
     $.each(score,function(index,value){
-      console.log(index)
-      console.log(value)
       var drift = (value/5*100+"%")
       $('#'+index+'_rating').html(t(value))
       $('#'+index+'_slider').css('left',drift)
     })
   } else {
     $('#progress_section').show()
-    $('#rating_bars').hide()
     $('#rating_progress').html(score.count+"/10")
     var drift = (100-((score.count/10)*100)+"%")
     $('.progress-bar-level').css('right',drift)
+    $.each(score,function(index,value){
+      var drift = (value/5*100+"%")
+      $('#'+index+'_rating').html(t(value))
+      $('#'+index+'_slider').css('left',drift)
+    })
+    $('#rating_count').hide()
   }
 }
 
