@@ -216,21 +216,29 @@ function printShip(){
   })
 
 //CREATE PEER TABLE
-$.each(peer,function(index,key,value){
-  var rank = index+1
-  var flag = flagSelect(key.nation)
-  if (key.premium == true){
-      var color = '#ffca5f'
+  $.each(peer,function(index,key,value){
+    var rank = index+1
+    var flag = flagSelect(key.nation)
+
+    if (key.premium == true){
+        var color = '#ffca5f'
+      } else {
+        var color = '#ffffff'
+      }
+
+    if (key.main_id == $('#current-ship-id').html()){
+      var style = 'style="font-weight: bold;font-style: italic;"'
     } else {
-      var color = '#ffffff'
+      var style = ""
     }
-  if (key.class == "Aircraft Carrier") {
-      $('#peer_board').append('<div class="w-layout-grid leaderboard-row-2" id="'+key.main_id+'"><div class="sticky-l"><div info="rank">'+rank+'</div><img class="icon _16h" src="'+flag+'"><div style="color:'+color+'">'+key.name+'</div><a href="/ships/'+key.slug+'" target=”_blank”><img class="icon" src="https://uploads-ssl.webflow.com/5f3b00acbb1ebd856f32d560/61ba47d8ca605b30bebdf084_newtabblue.svg"></a></div><div class="right" data-filter="hp">'+c(key.hp)+'</div><div class="right" data-filter="range">-</div><div class="right" data-filter="ap_dpm">-</div><div class="right" data-filter="rudder_shift">'+t(key.rudder_shift)+'</div><div class="right"data-filter="sea_detect">'+t(key.sea_detect)+'</div></div>')
-  } else {
-      $('#peer_board').append('<div class="w-layout-grid leaderboard-row-2" id="'+key.main_id+'"><div class="sticky-l"><div info="rank">'+rank+'</div><img class="icon _16h" src="'+flag+'"><div style="color:'+color+'">'+key.name+'</div><a href="/ships/'+key.slug+'" target=”_blank”><img class="icon" src="https://uploads-ssl.webflow.com/5f3b00acbb1ebd856f32d560/61ba47d8ca605b30bebdf084_newtabblue.svg"></a></div><div class="right" data-filter="hp">'+c(key.hp)+'</div><div class="right" data-filter="range">'+o(key.range)+'</div><div class="right" data-filter="ap_dpm">'+c(key.ap_dpm)+'</div><div class="right" data-filter="rudder_shift">'+t(key.rudder_shift)+'</div><div class="right"data-filter="sea_detect">'+t(key.sea_detect)+'</div></div>')
-  }
-  $('[data-filter="hp"]').addClass('selected').attr('data-sort',1).find('.filter').show()
-})
+
+    if (key.class == "Aircraft Carrier") {
+        $('#peer_board').append('<div class="w-layout-grid leaderboard-row-2" id="'+key.main_id+'"'+style+'><div class="sticky-l"><div info="rank">'+rank+'</div><img class="icon _16h" src="'+flag+'"><div style="color:'+color+'">'+key.name+'</div><a href="/ships/'+key.slug+'" target=”_blank”><img class="icon" src="https://uploads-ssl.webflow.com/5f3b00acbb1ebd856f32d560/61ba47d8ca605b30bebdf084_newtabblue.svg"></a></div><div class="right" data-filter="hp">'+c(key.hp)+'</div><div class="right" data-filter="range">-</div><div class="right" data-filter="ap_dpm">-</div><div class="right" data-filter="rudder_shift">'+o(key.rudder_shift)+'</div><div class="right"data-filter="sea_detect">'+o(key.sea_detect)+'</div></div>')
+    } else {
+        $('#peer_board').append('<div class="w-layout-grid leaderboard-row-2" id="'+key.main_id+'"'+style+'><div class="sticky-l"><div info="rank">'+rank+'</div><img class="icon _16h" src="'+flag+'"><div style="color:'+color+'">'+key.name+'</div><a href="/ships/'+key.slug+'" target=”_blank”><img class="icon" src="https://uploads-ssl.webflow.com/5f3b00acbb1ebd856f32d560/61ba47d8ca605b30bebdf084_newtabblue.svg"></a></div><div class="right" data-filter="hp">'+c(key.hp)+'</div><div class="right" data-filter="range">'+o(key.range)+'</div><div class="right" data-filter="ap_dpm">'+c(key.ap_dpm)+'</div><div class="right" data-filter="rudder_shift">'+o(key.rudder_shift)+'</div><div class="right"data-filter="sea_detect">'+o(key.sea_detect)+'</div></div>')
+    }
+  })
+    $('[data-filter="hp"]').addClass('selected').attr('data-sort',1).find('.filter').show()
 }
 
 
