@@ -162,7 +162,6 @@ function printShip(){
       //PRINT CONSUMES
       if (key.indexOf('consum')!==-1){
         var slot = key
-        console.log(value)
         if (value.length==0) {$('#'+slot).hide()}
         $.each(value, function(index,key,value){
           var type = key.name
@@ -225,7 +224,8 @@ function printShip(){
       } else {
         var color = '#ffffff'
       }
-
+      console.log(key.main_id)
+      console.log($('#current-ship-id').html())
     if (key.main_id == $('#current-ship-id').html()){
       var style = 'style="font-weight: bold;font-style: italic;"'
     } else {
