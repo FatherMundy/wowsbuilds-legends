@@ -225,8 +225,8 @@ function printShip(){
         var color = '#ffffff'
       }
       console.log(key.main_id)
-      console.log($('#current-ship-id').html())
-    if (key.main_id == $('#current-ship-id').html()){
+      console.log($('#current-ship-slug').html())
+    if (key.slug == $('#current-ship-slug').html()){
       var style = 'style="font-weight: bold;font-style: italic;"'
     } else {
       var style = ""
