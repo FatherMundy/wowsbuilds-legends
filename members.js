@@ -108,6 +108,7 @@ function addPlayerDetails(result){
     var platform = 'https://uploads-ssl.webflow.com/5f3b00acbb1ebd856f32d560/609e8bc6da2c0a84415717d8_ps-icon.svg'
   }
 
+  document.title = result.fields.username + " - WoWS Builds Member";
   $('#profile_photo').attr('src',result.fields.profile_photo_url)
   $('#rank_icon').attr('src',result.fields.rank_icon[0])
   $('#rank_icon_title').attr('src',result.fields.rank_icon[0])
