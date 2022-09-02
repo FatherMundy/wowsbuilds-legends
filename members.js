@@ -182,7 +182,7 @@ function ratingData(result){
   $('#rating-text').html(first.rating)
   $('#rating-label-text').html(first.category)
   $('#recent_rating_print').html(first.recent_rating)
-  $('#recent_category_print').html(first.recent_rating)
+  $('#recent_category_print').html(first.recent_category)
   $('#last_upload_date').html(format)
   $('#last_upload_battles').html(first.recent_battles + " recent battles")
 
