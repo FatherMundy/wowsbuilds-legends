@@ -58,14 +58,8 @@ function ki(x){
 };
 
 function inputData(ratings_data,result,index,id) {
-  console.log(ratings_data)
-  console.log(result)
-  console.log(index)
-  console.log(id)
   var len = ratings_data.length
-  console.log(len)
   var select = len - index - 1
-  console.log(select)
   var data = ratings_data[select]
   $.each(data,function(key,value){
     var x = $('#'+key)
@@ -628,7 +622,6 @@ function ratingData(result){
 
 function recordData(result){
   var records = JSON.parse(result.fields.record_json)
-  console.log(records)
   $.each(records,function(i,value){
     $('#records').append('<a href="/ships/'+value.ship_slug+'" class="card-outline flex-h-s w-inline-block"><div class="flex-v-l"><div class="flex-h-c"><img src="'+value.flag+'" loading="lazy" alt="" class="icon _12h"><div>'+value.tier+' '+value.ship+'</div></div><div class="flex-h-c"><div class="tag">'+value.type+'</div><div class="tag green">Active</div></div></div><div class="saria-subtitle">'+c(value.record)+'</div></a>')
   })
@@ -636,7 +629,6 @@ function recordData(result){
 
 function seriesData(result){
   var series = JSON.parse(result.fields.series_json)
-  console.log(series)
   $.each(series,function(i,value){
     $('#series').append('<a href="/ships/'+value.ship_slug+'" class="card-outline flex-h-s w-inline-block"><div class="flex-v-l"><div class="flex-h-c"><img src="'+value.flag+'" loading="lazy" alt="" class="icon _12h"><div>'+value.tier+' '+value.ship+'</div></div><div class="flex-h-c"><div class="tag">'+value.type+'</div><div class="tag green">Active</div></div></div><div class="saria-subtitle">'+c(value.record)+'</div></a>')
   })
@@ -671,13 +663,11 @@ async function runQuery(){
   if (result.fields.builds_json != '[]') {
     buildData(result)
   } else {
-    console.log('no builds')
     $('#empty_builds').show()
   }
   if (result.fields.rating_json != '[]') {
     ratingData(result)
   } else {
-    console.log('no ratings')
     $('#no_upload').show()
     $('#ratings').hide()
   }
