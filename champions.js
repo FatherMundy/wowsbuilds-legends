@@ -14,6 +14,15 @@ function c(num) {
   }
 };
 
+function printPodium(){
+  if($('#series-status').html()=="Complete"){
+    var damage_podium = JSON.parse($('#damage-podium').html())
+    var xp_podium = JSON.parse($('#xp-podium').html())
+    console.log(damage_podium)
+    console.log(xp_podium)
+  }
+}
+
 function verify (x){
   if (x == 1) {
     return '<img src="https://uploads-ssl.webflow.com/5f3b00acbb1ebd856f32d560/617684d889f7617e1fd84c8a_Verified.svg" class="verify-icon">'
@@ -102,3 +111,5 @@ new gridjs.Grid({
   data: damageRaw,
   style: style
 }).render(document.getElementById("dmgTable"));
+
+document.onload = printPodium
