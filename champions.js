@@ -136,4 +136,4 @@ new gridjs.Grid({
   style: style
 }).render(document.getElementById("dmgTable"));
 
-document.onload = printPodium
+window.onload = printPodium
