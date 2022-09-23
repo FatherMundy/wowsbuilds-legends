@@ -14,39 +14,6 @@ function c(num) {
   }
 };
 
-function printPodium(){
-  if($('#series-status').html()=="Complete"){
-    var damage_podium = JSON.parse($('#damage-podium').html())
-    var xp_podium = JSON.parse($('#xp-podium').html())
-    console.log(damage_podium)
-    console.log(xp_podium)
-    damage_podium.each(function(index,value){
-      console.log(index)
-      console.log(value)
-      if (value.rank == "First Place") {
-        $('#damage_first').html(value.username)
-      } else if (value.rank == "Second Place") {
-        $('#damage_second').html(value.username)
-      } else if (value.rank == "Third Place") {
-        $('#damage_third').html(value.username)
-      } 
-    })
-    xp_podium.each(function(index,value){
-      console.log(index)
-      console.log(value)
-      if (value.rank == "First Place") {
-        $('#xp_first').html(value.username)
-      } else if (value.rank == "Second Place") {
-        $('#xp_second').html(value.username)
-      } else if (value.rank == "Third Place") {
-        $('#xp_third').html(value.username)
-      } 
-    })
-  } else {
-    console.log('competition in progress')
-  }
-}
-
 function verify (x){
   if (x == 1) {
     return '<img src="https://uploads-ssl.webflow.com/5f3b00acbb1ebd856f32d560/617684d889f7617e1fd84c8a_Verified.svg" class="verify-icon">'
@@ -135,5 +102,3 @@ new gridjs.Grid({
   data: damageRaw,
   style: style
 }).render(document.getElementById("dmgTable"));
-
-window.onload = printPodium
