@@ -42,6 +42,8 @@ function printPodium(){
         $('#xp_third').html(value.username)
       } 
     })
+  } else {
+    console.log('competition in progress')
   }
 }
 
