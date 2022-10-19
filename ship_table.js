@@ -35,7 +35,9 @@ function flagSelect(x){
     else if (x == "U.K.") {return 'https://uploads-ssl.webflow.com/5f3b00acbb1ebd856f32d560/61a4fbd1cfe6f7704f1d0cbf_uk.svg'}
     else if (x == "U.S.A.") {return 'https://uploads-ssl.webflow.com/5f3b00acbb1ebd856f32d560/61a4fbcdb67f56ed06f0e5f9_usa.svg'}
     else if (x == "U.S.S.R.") {return 'https://uploads-ssl.webflow.com/5f3b00acbb1ebd856f32d560/61a4fbd438320f7a32ca2155_ussr.svg'}
+    else if (x == "Commonwealth") {return 'https://uploads-ssl.webflow.com/5f3b00acbb1ebd856f32d560/6237ce1346d204c08c5113f3_com-flag.svg'}
 }
+
 
 function tierSelect(x){
 	if (x==1) {return "I"}
@@ -45,7 +47,8 @@ function tierSelect(x){
 	else if (x==5) {return "V"}
 	else if (x==6) {return "VI"}
 	else if (x==7) {return "VII"}
-	else if (x==8) {return "★"}
+	else if (x==8) {return "VIII"}
+	else if (x==9) {return "★"}
 }
 
 function classSelect(x,p){
