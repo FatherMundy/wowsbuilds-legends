@@ -233,9 +233,9 @@ function printShip(){
     }
 
     if (key.class == "Aircraft Carrier") {
-        $('#peer_board').append('<div class="w-layout-grid leaderboard-row-2" id="'+key.main_id+'"'+style+'><div class="sticky-l"><div info="rank">'+rank+'</div><img class="icon _16h" src="'+flag+'"><div style="color:'+color+'">'+key.name+'</div><a href="/ships/'+key.slug+'" target=”_blank”><img class="icon" src="https://uploads-ssl.webflow.com/5f3b00acbb1ebd856f32d560/61ba47d8ca605b30bebdf084_newtabblue.svg"></a></div><div class="right" data-filter="hp">'+c(key.hp)+'</div><div class="right" data-filter="range">-</div><div class="right" data-filter="ap_dpm">-</div><div class="right" data-filter="rudder_shift">'+o(key.rudder_shift)+'</div><div class="right"data-filter="sea_detect">'+o(key.sea_detect)+'</div></div>')
+        $('#peer_board').append('<div class="w-layout-grid leaderboard-row-2" id="'+key.slug+'"'+style+'><div class="sticky-l"><div info="rank">'+rank+'</div><img class="icon _16h" src="'+flag+'"><div style="color:'+color+'">'+key.name+'</div><a href="/ships/'+key.slug+'" target=”_blank”><img class="icon" src="https://uploads-ssl.webflow.com/5f3b00acbb1ebd856f32d560/61ba4849ca605b4dd1bdf45b_newttabltblue.svg"></a></div><div class="right" data-filter="hp">'+c(key.hp)+'</div><div class="right" data-filter="range">-</div><div class="right" data-filter="ap_dpm">-</div><div class="right" data-filter="rudder_shift">'+o(key.rudder_shift)+'</div><div class="right"data-filter="sea_detect">'+o(key.sea_detect)+'</div></div>')
     } else {
-        $('#peer_board').append('<div class="w-layout-grid leaderboard-row-2" id="'+key.main_id+'"'+style+'><div class="sticky-l"><div info="rank">'+rank+'</div><img class="icon _16h" src="'+flag+'"><div style="color:'+color+'">'+key.name+'</div><a href="/ships/'+key.slug+'" target=”_blank”><img class="icon" src="https://uploads-ssl.webflow.com/5f3b00acbb1ebd856f32d560/61ba47d8ca605b30bebdf084_newtabblue.svg"></a></div><div class="right" data-filter="hp">'+c(key.hp)+'</div><div class="right" data-filter="range">'+o(key.range)+'</div><div class="right" data-filter="ap_dpm">'+c(key.ap_dpm)+'</div><div class="right" data-filter="rudder_shift">'+o(key.rudder_shift)+'</div><div class="right"data-filter="sea_detect">'+o(key.sea_detect)+'</div></div>')
+        $('#peer_board').append('<div class="w-layout-grid leaderboard-row-2" id="'+key.slug+'"'+style+'><div class="sticky-l"><div info="rank">'+rank+'</div><img class="icon _16h" src="'+flag+'"><div style="color:'+color+'">'+key.name+'</div><a href="/ships/'+key.slug+'" target=”_blank”><img class="icon" src="https://uploads-ssl.webflow.com/5f3b00acbb1ebd856f32d560/61ba4849ca605b4dd1bdf45b_newttabltblue.svg"></a></div><div class="right" data-filter="hp">'+c(key.hp)+'</div><div class="right" data-filter="range">'+o(key.range)+'</div><div class="right" data-filter="ap_dpm">'+c(key.ap_dpm)+'</div><div class="right" data-filter="rudder_shift">'+o(key.rudder_shift)+'</div><div class="right"data-filter="sea_detect">'+o(key.sea_detect)+'</div></div>')
     }
   })
     $('[data-filter="hp"]').addClass('selected').attr('data-sort',1).find('.filter').show()
@@ -258,16 +258,22 @@ function filterTable(){
       if ($(this).attr('id') !== undefined) {$(this).remove()}
     })
     //Add Rows
+    console.log(sort)
     $.each(sort,function(index,key,value){
       var rank = index+1
       var flag = flagSelect(key.nation)
-      var id = key.main_id
+      var id = key.slug
       if (key.premium == true){
         var color = '#ffca5f'
       } else {
         var color = '#ffffff'
       }
-      $('#peer_board').append('<div class="w-layout-grid leaderboard-row-2" id="'+id+'"><div class="sticky-l"><div info="rank">'+rank+'</div><img class="icon _16h" src="'+flag+'"><div style="color:'+color+'">'+key.name+'</div><a href="/ships/'+key.slug+'" target=”_blank”><img class="icon" src="https://uploads-ssl.webflow.com/5f3b00acbb1ebd856f32d560/61ba47d8ca605b30bebdf084_newtabblue.svg"></a></div></div>')
+      if (key.slug == $('#current-ship-slug').html()){
+        var style = 'style="font-weight: bold;font-style: italic;"'
+      } else {
+        var style = ""
+      }
+      $('#peer_board').append('<div class="w-layout-grid leaderboard-row-2" id="'+id+'"'+style+'><div class="sticky-l"><div info="rank">'+rank+'</div><img class="icon _16h" src="'+flag+'"><div style="color:'+color+'">'+key.name+'</div><a href="/ships/'+key.slug+'" target=”_blank”><img class="icon" src="https://uploads-ssl.webflow.com/5f3b00acbb1ebd856f32d560/61ba4849ca605b4dd1bdf45b_newttabltblue.svg"></a></div></div>')
       $.each(cols,function(index,value){
         var stat = key[value]
         var fmt = $('[stat="'+value+'"]').attr('fmt')
@@ -309,13 +315,18 @@ function filterTable(){
     $.each(sort,function(index,key,value){
       var rank = index+1
       var flag = flagSelect(key.nation)
-      var id = key.main_id
+      var id = key.slug
       if (key.premium == true){
         var color = '#ffca5f'
       } else {
         var color = '#ffffff'
       }
-      $('#peer_board').append('<div class="w-layout-grid leaderboard-row-2" id="'+id+'"><div class="sticky-l"><div info="rank">'+rank+'</div><img class="icon _16h" src="'+flag+'"><div style="color:'+color+'">'+key.name+'</div><a href="/ships/'+key.slug+'" target=”_blank”><img class="icon" src="https://uploads-ssl.webflow.com/5f3b00acbb1ebd856f32d560/61ba47d8ca605b30bebdf084_newtabblue.svg"></a></div></div>')
+      if (key.slug == $('#current-ship-slug').html()){
+        var style = 'style="font-weight: bold;font-style: italic;"'
+      } else {
+        var style = ""
+      }
+      $('#peer_board').append('<div class="w-layout-grid leaderboard-row-2" id="'+id+'"'+style+'><div class="sticky-l"><div info="rank">'+rank+'</div><img class="icon _16h" src="'+flag+'"><div style="color:'+color+'">'+key.name+'</div><a href="/ships/'+key.slug+'" target=”_blank”><img class="icon" src="https://uploads-ssl.webflow.com/5f3b00acbb1ebd856f32d560/61ba47d8ca605b30bebdf084_newtabblue.svg"></a></div></div>')
       $.each(cols,function(index,value){
         var stat = key[value]
         var fmt = $('[stat="'+value+'"]').attr('fmt')
@@ -395,22 +406,22 @@ function modColumn(){
 
 //BUILD CARDS
 if ($('#top-build').length!==0) {
-var mods = JSON.parse($('#top-build').find('[data-set="mods"]').html())
-var skills = JSON.parse($('#top-build').find('[data-set="skills"]').html())
-var inspirations = JSON.parse($('#top-build').find('[data-set="inspirations"]').html())
-$.each(mods,function(index,value){
-  var icon = $('#'+value).attr('icon')
-  $('#top-build').find('[data-print="mods"]').append('<img src="'+icon+'" class="icon _40h">')
-})
-$.each(skills,function(index,value){
-  var icon = $('#'+value).attr('icon')
-  $('#top-build').find('[data-print="skills"]').append('<img src="'+icon+'" class="icon _40h">')
-})
-$.each(inspirations,function(index,value){
-  var icon = $('#'+value).attr('icon')
-  var head = $('#'+value).attr('head')
-  $('#top-build').find('[data-print="inspirations"]').append('<img src="'+head+'" class="icon _40h">').append('<img src="'+icon+'" class="icon _40h">')
-})
+  var mods = JSON.parse($('#top-build').find('[data-set="mods"]').html())
+  var skills = JSON.parse($('#top-build').find('[data-set="skills"]').html())
+  var inspirations = JSON.parse($('#top-build').find('[data-set="inspirations"]').html())
+  $.each(mods,function(index,value){
+    var icon = $('#'+value).attr('icon')
+    $('#top-build').find('[data-print="mods"]').append('<img src="'+icon+'" class="icon _40h">')
+  })
+  $.each(skills,function(index,value){
+    var icon = $('#'+value).attr('icon')
+    $('#top-build').find('[data-print="skills"]').append('<img src="'+icon+'" class="icon _40h">')
+  })
+  $.each(inspirations,function(index,value){
+    var icon = $('#'+value).attr('icon')
+    var head = $('#'+value).attr('head')
+    $('#top-build').find('[data-print="inspirations"]').append('<img src="'+head+'" class="icon _40h">').append('<img src="'+icon+'" class="icon _40h">')
+  })
 }
 
 window.onready = printShip()
@@ -447,6 +458,3 @@ $(document).on('click','#show-hide-stats',function(){
     $(this).find('div').html("Show Stat Selection")
   }
 })
-
-
-
