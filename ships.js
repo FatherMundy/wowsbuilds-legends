@@ -142,6 +142,9 @@ function printShip(){
       if (key == "ap_damage" && value == null) {
         $('#ap-shell').hide()
       }
+      if (key == "sap_damage" && value !== null) {
+        $('#sap-shell').removeClass('hidden')
+      }
       if (key == "atba_range" && value == null) {
         $('#sb').hide()
       }
