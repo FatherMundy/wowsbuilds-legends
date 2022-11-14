@@ -37,6 +37,8 @@ const autoMetrics = {
 }
 const constMetrics = ['armor','torp_reduc','turning_circle','torpedo_bomber_attack','torpedo_bomber_flight','he_bomber_attack','he_bomber_flight']
 
+const readOnly = 'key3mEMK4VVsdmpkq'
+
 var ship = JSON.parse($('[data-type="ship-data"]').html())
 var traits = new Array()
 var skills = new Array()
@@ -96,7 +98,6 @@ function upgradeMods (mods,metric,base) {
 }
 
 function printShip(ship){
-  console.log(ship)
   //show/hide
     if (ship.class == 'Aircraft Carrier') {
       $('#aircraft').show()
@@ -182,6 +183,51 @@ function printShip(ship){
     }  
   })
   $('#aa_max_range').find('[info="stock"]').html(Math.max(ship.aa_1_range,ship.aa_2_range,ship.aa_3_range,ship.aa_4_range).toFixed(2)+" km")
+
+}
+
+async function getMember() {
+  let result
+  let builder_id = $('#builder-acctount-id').html()
+  if (builder_id !== undefined) {
+    let queryURI = 'https://api.airtable.com/v0/appuDJTZMggJXiiyL/Members?fields%5B%5D=member_slug&fields%5B%5D=profile_photo&fields%5B%5D=rank_icon_img&fields%5B%5D=count_builds&fields%5B%5D=count_upvotes&fields%5B%5D=total_battles&fields%5B%5D=recent_rating&fields%5B%5D=recent_category&fields%5B%5D=current_rating&fields%5B%5D=current_category&fields%5B%5D=platform&fields%5B%5D=gamertag&filterByFormula=airtable_id%3D%22'+builder_id+'%22'
+    try {
+      const result = $.ajax({
+        url: queryURI,
+        headers: {'Authorization': 'Bearer '+readOnly},
+      })
+      return result
+    } catch  (error) {
+      console.log(error)
+    }
+  } else {
+    console.log('anon build')
+  }
+}
+    
+
+async function printMemeber(){
+  let result= await getMember()
+  console.log(result)
+  if (result) {
+    let data = result.records[0].fields
+    $('#builder-page').attr('src',data.member_slug).removeClass('hidden')
+    $('#builder-picture').attr('src',data.profile_photo[0].url)
+    $('#builder-rank').attr('src',data.rank_icon_img[0].url).removeClass('hidden')
+    $('#upvotes').html(data.count_upvotes)
+    $('#submissions').html(data.count_builds)
+    if(data.platform!==undefined){
+      $('#builder-platform').attr('src',data.plaform)
+      $('#builder-gamertag').html(data.gamertag)
+      $('#platform').removeClass('hidden')
+    }
+    if(data.total_battles!==undefined){
+      $('#battles').html(data.total_battles)
+      $('#rating').html(data.current_rating.toFixed(0)+" - "+data.current_category)
+      $('#rating-data').removeClass('hidden')
+    }
+    $('#builder-info').removeClass('hidden')
+  }
 
 }
 
@@ -279,24 +325,16 @@ function calcBuild(){
     mods.push(json)
   })
 
-  console.log('mods')
-  console.log(mods)
-
   $('[data-type="skill-data"]').each(function(){
     var json = JSON.parse($(this).html())
     skills.push(json)
   })
-
-  console.log('skills')
-  console.log(skills)
 
   $('[data-type="trait-data"]').each(function(){
     var json = JSON.parse($(this).html())
     traits.push(json)
   })
 
-  console.log('traits')
-  console.log(traits)
  
 
   //auto values
@@ -385,8 +423,6 @@ function calcBuild(){
 
         $('#traverse').find('div[info="build"]').html(t(b)+" º/s")
         $('#traverse').find('div[info="diff"]').html(((b-s)/s*100).toFixed(2)+"%")
-        console.log("traverse diff")
-        console.log((b-s)*100)
         $('#traverse').find('div[info="diff"]').css('color',k((b-s)*100))
         $('#traverse').removeData().data('build',b)
 
@@ -547,7 +583,10 @@ function calcBuild(){
       $('#aa_max_dps').find('div[info="diff"]').html(((b-s)/s*100).toFixed(2)+"%")
       $('#aa_max_dps').find('div[info="diff"]').css('color',k((b-s)*100))
       $('#aa_max_dps').removeData().data('build',b)
+
+  printMemeber()
 }
+
 
 window.onready = calcBuild()
 
