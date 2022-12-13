@@ -660,16 +660,16 @@ async function runQuery(){
   var result = await getMember()
   //console.log(result.fields)
   addPlayerDetails(result)
-  if (result.fields.builds_json != '[]') {
-    buildData(result)
-  } else {
-    $('#empty_builds').show()
-  }
   if (result.fields.rating_json != '[]') {
     ratingData(result)
   } else {
     $('#no_upload').show()
     $('#ratings').hide()
+  }
+  if (result.fields.builds_json != '[]') {
+    buildData(result)
+  } else {
+    $('#empty_builds').show()
   }
   if (result.fields.record_json != '[]') {
     recordData(result)
