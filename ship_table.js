@@ -31,11 +31,12 @@ function flagSelect(x){
     else if (x == "Germany") {return 'https://uploads-ssl.webflow.com/5f3b00acbb1ebd856f32d560/61a4fbd1a3ae6a08a0dd397e_germany.svg'}
     else if (x == "Italy") {return 'https://uploads-ssl.webflow.com/5f3b00acbb1ebd856f32d560/61a4fbd6f20b977b27f8dfe6_italy.svg'}
     else if (x == "Japan") {return 'https://uploads-ssl.webflow.com/5f3b00acbb1ebd856f32d560/61a4fbd1a3ae6a05f5dd397d_japan.svg'}
-    else if (x == "Pan-Asian") {return 'https://uploads-ssl.webflow.com/5f3b00acbb1ebd856f32d560/615b05d1332aa9d9e651ddba_pas-flag.svg'}
+    else if (x == "Pan-Asian" || x == "Pan-Asia") {return 'https://uploads-ssl.webflow.com/5f3b00acbb1ebd856f32d560/615b05d1332aa9d9e651ddba_pas-flag.svg'}
     else if (x == "U.K.") {return 'https://uploads-ssl.webflow.com/5f3b00acbb1ebd856f32d560/61a4fbd1cfe6f7704f1d0cbf_uk.svg'}
     else if (x == "U.S.A.") {return 'https://uploads-ssl.webflow.com/5f3b00acbb1ebd856f32d560/61a4fbcdb67f56ed06f0e5f9_usa.svg'}
     else if (x == "U.S.S.R.") {return 'https://uploads-ssl.webflow.com/5f3b00acbb1ebd856f32d560/61a4fbd438320f7a32ca2155_ussr.svg'}
     else if (x == "Commonwealth") {return 'https://uploads-ssl.webflow.com/5f3b00acbb1ebd856f32d560/6237ce1346d204c08c5113f3_com-flag.svg'}
+    else if (x == "Pan-America") {return 'https://uploads-ssl.webflow.com/5f3b00acbb1ebd856f32d560/6237ce1346d204211a5113f5_pam-flag.svg'}
 }
 
 
