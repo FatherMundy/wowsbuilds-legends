@@ -103,7 +103,7 @@ function addPlayerDetails(result){
   }
 
   document.title = result.fields.username + " - WoWS Builds Member";
-  $('#profile_photo').attr('src',result.fields.profile_photo_url)
+  $('#profile_photo').attr('src',result.fields.profile_photo[0].url)
   $('#rank_icon').attr('src',result.fields.rank_icon[0])
   $('#rank_icon_title').attr('src',result.fields.rank_icon[0])
   $('#rank_icon_minor').attr('src',result.fields.rank_icon[0])
